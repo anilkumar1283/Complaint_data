@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIT Complaints</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+        /* Material Icons */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(92, 159, 217);
+            padding: 10px 50px;
+            height: 40px;
+        }
+
+        .navbar h3 {
+            color: white;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: rgb(15, 16, 16);
+            text-decoration: none;
+            background-color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        /* Dropdown for departments */
+        .departments {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        select {
+            width: 200px;
+            height: 40px;
+            border: 1px solid black;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* Card container and layout */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding: 40px;
+            margin-left:38px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .card h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        /* Buttons styling */
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background-color: #2c80b4;
+        }
+
+        #del, #like {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        #del {
+            background-color: #e74c3c;
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+      #like-section {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      }
+
+        #like {
+            background-color: #3498db;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #l1 {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        #res {
+            width: 100%;  /* Increase the width of Resolved button */
+            margin: 0 auto;
+        }
+
+        /* Responsive layout for smaller screens */
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h3>VITCOMPLAINTS</h3>
+        <a href="/home">Home</a>
+        <a href="/com">Add a Complaint</a>
+        <a href="/resolved">Resolved Issues</a>
+        
+    </div>
+
+    <!-- Department Dropdown -->
+    <div class="departments">
+        <form method="post" action="/fil">
+            <select id="sel" name="dep" onchange="filteredData()">
+              <option hidden>Select A Dept</option>
+              <option value="Cse">CSE</option>
+              <option value="IT">IT</option>
+              <option value="Mech">Mech</option>
+              <option value="all">All</option>
+            </select>
+        </form>
+    </div>
+
+    <!-- Complaint Cards -->
+    <div class="cards">
+        <% data.forEach(d => { %>
+            <div class="card" data-dep="<%= d.Branch %>">
+                <!-- Card Header: Complaint Type and Delete Button -->
+                <div>
+                    <h2><%= d.Complaint_Type %></h2>
+                    <form action="/del" method="post">
+                        <input type="hidden" name="del" value="<%= d._id %>">
+                        <button type="submit" id="del" class="material-symbols-outlined">delete</button>
+                    </form>
+                </div>
+
+                <p><%= d.Info %></p>
+
+                <!-- Footer Section: View More and Like Buttons -->
+                <div class="footer">
+                    <form action="/view" method="get">
+                        <input type="hidden" name="id" value="<%= d._id %>">
+                        <button type="submit">VIEW MORE</button>
+                    </form>
+
+                    <form action="/likes" method="post" id="like-section">
+                        <input type="hidden" name="like" value="<%= d._id %>">
+                        <button type="submit" id="like" class="material-symbols-outlined">thumb_up</button>
+                        <p id="l1"><%= d.likes %></p>
+                    </form>
+                </div>
+
+                <!-- Centered Resolved Button -->
+                <form action="/resolved" method="post">
+                    <input type="hidden" name="resolve" value="<%= d._id %>">
+                    <button type="submit" id="res">Resolved</button>
+                </form>
+            </div>
+        <% }) %>
+    </div>
+
+            <script>
+                // Function to filter cards based on the selected department
+                function filteredData() {
+                    const selectedDept = document.getElementById("sel").value.toLowerCase();  // Get the selected value and convert it to lowercase
+                    const cards = document.querySelectorAll(".card");  // Select all cards
+
+                    cards.forEach(card => {
+                        const cardDept = card.getAttribute("data-dep").toLowerCase();  // Get the department for each card and convert it to lowercase
+
+                        // Show the card if it matches the selected department, or if "all" is selected
+                        if (selectedDept === "all" || cardDept === selectedDept) {
+                            card.classList.remove("hidden");
+                        } else {
+                            card.classList.add("hidden");
+                        }
+                    });
+                }
+
+                // Make sure the DOM is fully loaded before running the script
+                // window.onload = function () {
+                //     // Log the cards to verify they are being selected
+                //     const cards = document.querySelectorAll(".card");
+                //     console.log(cards);  // This should log the NodeList of your card elements
+
+                //     // Initially show all cards when the page loads
+                //     filteredData();  // Optionally, filter on load, based on the default selected option
+
+                //     // You can also add an event listener to handle the department selection dynamically
+                //     document.getElementById("sel").addEventListener("change", filteredData);  // Call filteredData() whenever the selection changes
+                // };
+            </script>
+
+
+</body>
+</html>

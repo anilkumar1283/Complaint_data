@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complaint Form</title>
+    <style>
+      /* Navbar Styles */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #45a049; /* Light green */
+        padding: 10px 50px;
+        height: 40px;
+      }
+
+      .navbar h3 {
+        color: white;
+        margin: 0;
+      }
+
+      .navbar a {
+        color: rgb(15, 16, 16);
+        text-decoration: none;
+        background-color: white;
+        padding: 5px 15px;
+        border-radius: 5px;
+      }
+
+      fieldset {
+        padding: 60px;
+        height: 100%;
+        width: 90vh;
+        position: relative;
+        left: 250px;
+      }
+
+      #i1, #i2 {
+        width: 300px;
+        height: 30px;
+      }
+
+      input {
+        height: 30px;
+        width: 800px;
+      }
+
+      select {
+        border-radius: 2px;
+        height: 40px;
+        width: 800px;
+      }
+
+      #z1 {
+        height: 35px;
+        width: 400px;
+      }
+
+      #sd {
+        height: 35px;
+        width: 85px;
+      }
+
+      textarea {
+        border-radius: 6px;
+      }
+
+      /* h3 {
+        height: 80px;
+        width: 940px;
+        
+      } */
+
+      #p11 {
+        position: relative;
+        top: 30px;
+      }
+
+      h2 {
+        position: relative;
+        top: 35px;
+      }
+
+      button {
+        width: 100%;
+        height: 40px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #83f28f;
+      }
+
+      #s00 {
+        position: relative;
+        left: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+     <h3>VIT-COMPLAINT FORM</h3>
+      <a href="/home">Home</a>
+      <a href="/resolved">Resolved Issues</a>
+    </div>
+
+    <form action="/com" method="post" class="com">
+      <div class="d0">
+        <center>
+          <h2>Vishnu Institute Of Technology</h2>
+          <br /><br /><br /><br />
+          <span id="s00">
+            <h3><p id="p11">College Complaint Form</p></h3>
+          </span>
+        </center>
+      </div>
+      <br /><br />
+      <div id="d1">
+        <fieldset>
+          <br /><br />
+          <span id="s1">
+            <label for="a">First Name 
+              <input type="text" name="fname" id="i1" required />
+            </label>
+          </span>
+          <span id="s2">
+            <label for="a1">Last Name 
+              <input type="text" name="lname" id="i2" required />
+            </label>
+          </span>
+          <br /><br />
+          <label for="b">Registration Number <br />
+            <input type="text" name="regd_no" required />
+          </label>
+          <br /><br />
+          <label for="c">Email <br />
+            <input type="email" name="email" required />
+          </label>
+          <br /><br />
+          <label for="d">Branch <br />
+            <select id="br" name="Branch" required>
+              <option hidden >Select Branch</option>
+              <option value="Cse">CSE</option>
+              <option value="IT">IT</option>
+              <option value="Mech">Mechanical</option>
+            </select>
+          </label>
+          <br /><br />
+          <label for="e">Complaint <br />
+            <select name="Complaint_Type" id="c1" required>
+              <option value="c10" disabled>Select</option>
+              <option value="Infrastructure">Infrastructure</option>
+              <option value="Faculty">Faculty</option>
+              <option value="Library">Library</option>
+              <option value="Hostel">Hostel</option>
+              <option value="Bus">Bus</option>
+              <option value="Security">Security</option>
+            </select>
+          </label>
+          <br /><br />
+          <label for="f">Please provide details <br />
+            <textarea name="Info" id="r1" cols="110" rows="15" required></textarea>
+          </label>
+          <br /><br />
+          <center>
+            <button type="submit">Submit</button>
+          </center>
+        </fieldset>
+      </div>
+    </form>
+  </body>
+</html>

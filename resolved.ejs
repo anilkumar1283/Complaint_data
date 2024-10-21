@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resolved Issues</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #45a049;
+            padding: 10px 50px;
+            height: 40px;
+        }
+
+        .navbar h3 {
+            color: white;
+            margin: 0;
+        }
+
+        .navbar a {
+            color: rgb(15, 16, 16);
+            text-decoration: none;
+            background-color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        #like-section{
+            display: flex;
+               align-items: center;
+               gap: 5px;
+            
+        }
+
+        /* Cards layout */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            
+            width: 300px; /* Fixed width for square shape */
+            height: 300px; /* Fixed height for square shape */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            margin-left: 30px;
+            
+            
+        }
+
+        /* Tick mark aligned next to complaint type */
+        .resolved-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .resolved-tick {
+            font-size: 32px; /* Increased size */
+            color: green;
+        }
+
+        /* Footer styles */
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        #like {
+            background-color: #3498db;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #l1 {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        /* Styled View More button */
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="navbar">
+        <h3>VITCOMPLAINTS - Resolved Issues</h3>
+        <a href="/home">Back to Complaints</a>
+    </div>
+
+    <!-- <div class="departments">
+        <select id="sel" onchange="filteredData()">
+            <option value="all" selected>All Departments</option>
+            <option value="Cse">CSE</option>
+            <option value="IT">IT</option>
+            <option value="Mech">Mechanical</option>
+        </select>
+    </div> -->
+
+    <div class="cards" id="cards-container">
+        <% data.forEach(d => { %>
+            <div class="card" data-dep="<%= d.Department %>">
+                <div class="resolved-header">
+                    <h2><%= d.Complaint_Type %></h2>
+                    <span class="material-symbols-outlined resolved-tick">done</span>
+                </div>
+
+                <p><%= d.Info %></p>
+
+                <div class="footer">
+                    <form action="/view" method="get">
+                        <input type="hidden" name="<%= d._id %>">
+                        <button type="submit">View More</button>
+                    </form>
+
+                    <form action="/likes" method="post" id="like-section">
+                        <input type="hidden" name="like" value="<%= d._id %>">
+                        <button type="submit" id="like" class="material-symbols-outlined">thumb_up</button>
+                        <p id="l1"><%= d.likes %></p>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+
+    <script>
+        function filteredData() {
+            const selectedDept = document.getElementById("sel").value;
+            const cards = document.querySelectorAll(".card");
+
+            cards.forEach(card => {
+                const cardDept = card.getAttribute("data-dep");
+                if (selectedDept === "all" || cardDept === selectedDept) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
